@@ -1,5 +1,6 @@
 package com.welldone.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T:HH:mm:ss'Z", timezone = "GMT")
     private Instant date;
     @ManyToOne
     @JoinColumn(name = "client_id")
