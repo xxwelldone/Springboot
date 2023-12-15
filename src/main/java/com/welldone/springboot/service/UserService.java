@@ -13,7 +13,7 @@ public class UserService {
     private UserRepository repo;
 
     public User findById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id).orElse(new User(null, "No user found", null, null, null));
 
     }
 
