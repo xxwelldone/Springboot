@@ -1,6 +1,7 @@
 package com.welldone.springboot.config;
 
 import com.welldone.springboot.model.Order;
+import com.welldone.springboot.model.OrderStatus;
 import com.welldone.springboot.model.User;
 import com.welldone.springboot.repository.OrderRepository;
 import com.welldone.springboot.repository.UserRepository;
@@ -25,7 +26,7 @@ public class TestConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         User u1 = new User(null, "Wesley", "www@gmail.com", "2222222", "12345");
         User u2 = new User(null, "Felipe", "yyy@gmail.com", "4444444", "12345");
-        Order o1 = new Order(null,  Instant.now(), u1 );
+        Order o1 = new Order(null,  Instant.now(), u1 , OrderStatus.PAID);
         userRepo.saveAll(Arrays.asList(u1, u2));
         orderRepo.save(o1);
 

@@ -20,13 +20,25 @@ public class Order implements Serializable {
 
     private User client;
 
+    private Integer orderStatus;
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus.getCode();
+    }
+
     public Order() {
     }
 
-    public Order(Long id, Instant date, User client) {
+    public Order(Long id, Instant date, User client, OrderStatus orderStatus) {
         this.id = id;
         this.date = date;
         this.client = client;
+       setOrderStatus(orderStatus);
+
     }
 
     public Long getId() {
