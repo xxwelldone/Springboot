@@ -1,5 +1,6 @@
 package com.welldone.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.welldone.springboot.model.pk.OrderItemPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -12,24 +13,29 @@ import java.util.Objects;
 @Table(name = "tb_OrderItems")
 public class OrderItems implements Serializable {
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
     private Integer qnt;
     private Double price;
 
-    public Order getOrder(){
+    @JsonIgnore
+    public Order getOrder() {
         return id.getOrder();
     }
-    public void setOrder(Order order){
+
+    public void setOrder(Order order) {
         id.setOrder(order);
     }
-    public Product getProduct(Product product){
+
+    public Product getProduct() {
         return id.getProduct();
     }
-    public void setProduct(Product product){
+
+    public void setProduct(Product product) {
         id.setProduct(product);
     }
 
-    public OrderItems(){}
+    public OrderItems() {
+    }
 
     public OrderItems(Order order, Product product, Integer qnt, Double price) {
         id.setOrder(order);

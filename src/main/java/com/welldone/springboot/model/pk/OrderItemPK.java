@@ -1,8 +1,10 @@
 package com.welldone.springboot.model.pk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.welldone.springboot.model.Order;
 import com.welldone.springboot.model.Product;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
@@ -45,4 +47,6 @@ public class OrderItemPK implements Serializable {
     public int hashCode() {
         return Objects.hash(getOrder(), getProduct());
     }
+
+
 }

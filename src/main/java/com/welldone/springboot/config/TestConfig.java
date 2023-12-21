@@ -1,10 +1,7 @@
 package com.welldone.springboot.config;
 
 import com.welldone.springboot.model.*;
-import com.welldone.springboot.repository.CategoryRepository;
-import com.welldone.springboot.repository.OrderRepository;
-import com.welldone.springboot.repository.ProductRepository;
-import com.welldone.springboot.repository.UserRepository;
+import com.welldone.springboot.repository.*;
 import com.welldone.springboot.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +25,8 @@ public class TestConfig implements CommandLineRunner {
     private ProductRepository productRepo;
     @Autowired
     private CategoryService cs;
+    @Autowired
+    OrderItemRepository orderItemRepository;
     @Override
     public void run(String... args) throws Exception {
         User u1 = new User(null, "Wesley", "www@gmail.com", "2222222", "12345");
@@ -40,13 +39,24 @@ public class TestConfig implements CommandLineRunner {
                 "Samsung TV 69 inches",
                 2.500,
                 "https://www.shutterstock.com/image-photo/tv-flat-screen-lcd-plasma-260nw-314401364.jpg");
+        Product p2 = new Product(null,
+                "Celular",
+                "Telefone",
+                5.600,
+                null);
         userRepo.saveAll(Arrays.asList(u1, u2));
         orderRepo.save(o1);
         categoryRepo.saveAll(Arrays.asList(c1,c2,c3));
         p1.getCategories().add(c1);
         p1.getCategories().add(c3);
-        productRepo.save(p1);
+        p2.getCategories().add(c1);
+        p2.getCategories().add(c3);
+        productRepo.saveAll(Arrays.asList(p1,p2));
 
+        OrderItems oi1 = new OrderItems(o1,p1,3, p1.getPrice());
+        OrderItems oi2 = new OrderItems(o1, p2,1, p2.getPrice());
+
+    orderItemRepository.saveAll(Arrays.asList(oi1,oi2));
 
     }
 }

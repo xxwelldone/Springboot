@@ -1,11 +1,14 @@
 package com.welldone.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -21,6 +24,11 @@ public class Order implements Serializable {
     private User client;
 
     private Integer orderStatus;
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItems> orderItems = new HashSet<>();
+    public Set<OrderItems> getOrderItems(){
+        return orderItems;
+    }
 
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(orderStatus);
@@ -77,12 +85,5 @@ public class Order implements Serializable {
         return Objects.hash(getId());
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", date=" + date +
-                ", client=" + client +
-                '}';
-    }
+
 }
