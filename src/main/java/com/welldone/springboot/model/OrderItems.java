@@ -1,7 +1,9 @@
 package com.welldone.springboot.model;
 
-
-import jakarta.persistence.*;
+import com.welldone.springboot.model.pk.OrderItemPK;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,38 +11,29 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_OrderItems")
 public class OrderItems implements Serializable {
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @EmbeddedId
+    private OrderItemPK id;
     private Integer qnt;
     private Double price;
 
-    public Order getOrder() {
-        return order;
+    public Order getOrder(){
+        return id.getOrder();
+    }
+    public void setOrder(Order order){
+        id.setOrder(order);
+    }
+    public Product getProduct(Product product){
+        return id.getProduct();
+    }
+    public void setProduct(Product product){
+        id.setProduct(product);
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public OrderItems() {
-    }
+    public OrderItems(){}
 
     public OrderItems(Order order, Product product, Integer qnt, Double price) {
-        this.order = order;
-        this.product = product;
+        id.setOrder(order);
+        id.setProduct(product);
         this.qnt = qnt;
         this.price = price;
     }
@@ -65,14 +58,11 @@ public class OrderItems implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof OrderItems that)) return false;
-        return Objects.equals(getOrder(), that.getOrder()) && Objects.equals(getProduct(), that.getProduct());
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrder(), getProduct());
+        return Objects.hash(id);
     }
 }
-
-
-
