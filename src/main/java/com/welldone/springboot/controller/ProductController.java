@@ -25,4 +25,8 @@ public class ProductController {
     public ResponseEntity<Product> findById(@PathVariable Long id){
         return ResponseEntity.ok().body(productRepo.findbyId(id));
     }
+    @GetMapping(value = "titulo/{titulo}")
+    public ResponseEntity<List<Product>> findAllByNameContainingIgnore(@PathVariable String titulo){
+        return ResponseEntity.ok().body(productRepo.findAllByNameContainingIgnoreCase(titulo));
+    }
 }
