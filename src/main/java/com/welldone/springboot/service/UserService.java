@@ -21,4 +21,27 @@ public class UserService {
         return repo.findAll();
     }
 
+    public User save(User user) {
+        return repo.save(user);
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
+
+    public User update(Long id, User user) {
+        User updatedUser = repo.getReferenceById(id);
+        updateData(updatedUser, user);
+
+
+        return repo.save(updatedUser);
+    }
+
+    private void updateData(User update, User user) {
+        update.setEmail(user.getEmail());
+        update.setName(user.getName());
+
+        update.setPhone(user.getPhone());
+    }
+
 }

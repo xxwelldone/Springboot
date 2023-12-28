@@ -1,6 +1,7 @@
 package com.welldone.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class Payment implements Serializable {
     private Instant date;
     @OneToOne
     @MapsId
+    @JsonIgnore
     private Order order;
 
     public Payment() {

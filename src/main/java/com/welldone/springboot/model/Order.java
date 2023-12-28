@@ -28,6 +28,10 @@ public class Order implements Serializable {
     private Set<OrderItems> orderItems = new HashSet<>();
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
+    public Double getTotal(){
+        Double total=0.0;
+        return orderItems.stream().mapToDouble((OrderItems::getSubTotal)).sum();
+    }
 
     public Payment getPayment() {
         return payment;
