@@ -2,6 +2,7 @@ package com.welldone.springboot.service;
 
 import com.welldone.springboot.model.User;
 import com.welldone.springboot.repository.UserRepository;
+import com.welldone.springboot.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class UserService {
     private UserRepository repo;
 
     public User findById(Long id) {
-        return repo.findById(id).orElse(new User(null, "No user found", null, null, null));
+        return repo.findById(id).orElseThrow(()->new ResourceNotFoundException(id));
 
     }
 
