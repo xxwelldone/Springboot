@@ -4,6 +4,7 @@ import com.welldone.springboot.model.User;
 import com.welldone.springboot.repository.UserRepository;
 import com.welldone.springboot.service.exceptions.DatabaseException;
 import com.welldone.springboot.service.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -42,11 +43,13 @@ public class UserService {
     }
 
     public User update(Long id, User user) {
+        try{
         User updatedUser = repo.getReferenceById(id);
         updateData(updatedUser, user);
-
-
-        return repo.save(updatedUser);
+        return repo.save(updatedUser);}
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(e.getMessage());
+        }
     }
 
     private void updateData(User update, User user) {
